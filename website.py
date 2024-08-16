@@ -87,9 +87,10 @@ def parse_file(filename):
             shippingpage=shipping.load_page(otherpagenumber)
             otherpagenumber+=1
             shippingpage.show_pdf_page(fitz.Rect(0,0,612,792),betweenfinal)
-            otherfilepath=os.path.join(folder, "shipping.pdf")
+            otherfilepath="shipping.pdf"
             # otherfilepath="shipping.pdf"
             shipping.save(otherfilepath)
+
             print(f"Shipping Label {shippinglabelsdone} processed")
         if i%2==1:
             labelsdone+=1
@@ -103,11 +104,12 @@ def parse_file(filename):
             finalpage=final.load_page(pagenumber)
             pagenumber+=1
             finalpage.show_pdf_page(fitz.Rect(0,0,612,792),betweenfinal)
-            file_path = os.path.join(folder, "labels.pdf")
+            file_path = "labels.pdf"
             # file_path = "labels.pdf"
             # betweenfinal.save("moo.pdf")
             final.save(file_path)
             print(f"Label {labelsdone} processed")              
+    
     print("Check labels.pdf for the labels and shippinglabels.pdf for the shipping labels")
 
 
@@ -121,10 +123,23 @@ if uploaded_file:
         with open(path, "wb") as f:
                 f.write(uploaded_file.getvalue())
         parse_file(path)
+        with open ("labels.pdf","rb") as label:
+            st.download_button(
+                label="Download labels",
+                data=label,
+                file_name="labels.pdf"
+            )
+        with open("shipping.pdf","rb") as shippingdata:
+            st.download_button(
+                label="Download shipping info",
+                data=shippingdata,
+                file_name="shipping.pdf"
+            )
+        
 # f=fitz.open()
 # f.write(file.read)
 # if file is not None:
 #     st.write(str(Path.home()))
 #     st.write(os.path.join(Path.home(), 'Downloads', file.name))
 #     parse_file(os.path.join(Path.home(), 'Downloads', file.name))
-        st.write("Check your downloads folder for labels.pdf and shipping.pdf")
+        # st.write("Check your downloads folder for labels.pdf and shipping.pdf")
