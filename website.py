@@ -3,6 +3,7 @@ import fitz
 import os
 import math
 from pathlib import Path
+import tempfile
 
 def old_parse_file(filename):
     file=fitz.open(filename)
@@ -111,11 +112,19 @@ def parse_file(filename):
 
 
 
-file=st.file_uploader("Import file",type="pdf")
+# file=st.file_uploader("Import file",type="pdf")
+
+uploaded_file = st.file_uploader("File upload", type="pdf")
+if uploaded_file:
+        temp_dir = tempfile.mkdtemp()
+        path = os.path.join(temp_dir, uploaded_file.name)
+        with open(path, "wb") as f:
+                f.write(uploaded_file.getvalue())
+        parse_file(path)
 # f=fitz.open()
 # f.write(file.read)
-if file is not None:
-    st.write(str(Path.home()))
-    st.write(os.path.join(Path.home(), 'Downloads', file.name))
-    parse_file(os.path.join(Path.home(), 'Downloads', file.name))
-    st.write("Check your downloads folder for labels.pdf and shipping.pdf")
+# if file is not None:
+#     st.write(str(Path.home()))
+#     st.write(os.path.join(Path.home(), 'Downloads', file.name))
+#     parse_file(os.path.join(Path.home(), 'Downloads', file.name))
+        st.write("Check your downloads folder for labels.pdf and shipping.pdf")
