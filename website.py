@@ -2,6 +2,7 @@ import streamlit as st
 import fitz
 import os
 import math
+from pathlib import Path
 
 def old_parse_file(filename):
     file=fitz.open(filename)
@@ -114,6 +115,7 @@ file=st.file_uploader("Import file",type="pdf")
 # f=fitz.open()
 # f.write(file.read)
 if file is not None:
-    st.write(os.path.join(os.path.expanduser('~'), 'Downloads', file.name))
-    parse_file(os.path.join(os.path.expanduser('~'), 'Downloads', file.name))
+    st.write(str(Path.home()))
+    st.write(os.path.join(Path.home(), 'Downloads', file.name))
+    parse_file(os.path.join(Path.home(), 'Downloads', file.name))
     st.write("Check your downloads folder for labels.pdf and shipping.pdf")
