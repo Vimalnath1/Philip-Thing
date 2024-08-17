@@ -53,6 +53,7 @@ def parse_file(filenames):
 
 
 uploaded_file = st.file_uploader("File upload", type="pdf",accept_multiple_files=True)
+st.write(uploaded_file)
 paths=[]
 if uploaded_file:
         temp_dir = tempfile.mkdtemp()
